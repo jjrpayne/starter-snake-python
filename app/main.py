@@ -74,26 +74,53 @@ def move():
 	snakes = data["board"]["snakes"]
 	foods = data["board"]["food"]
 
+	# order: up, down, left, right
+	min_distances = [0, 0, 0, 0]
+	distances = [0, 0, 0, 0]
+
+	# get distance of closest snake
 	for snake in snakes:
 		for coords in snake["body"]:
-			directions["up"] += abs(coords["x"] - head_coord["x"])
-			directions["up"] += abs(coords["y"] - (head_coord["y"]-1))
-			directions["down"] += abs(coords["x"] - head_coord["x"])
-			directions["down"] += abs(coords["y"] - (head_coord["y"]+1))
-			directions["left"] += abs(coords["x"] - (head_coord["x"]-1))
-			directions["left"] += abs(coords["y"] - head_coord["y"])
-			directions["right"] += abs(coords["x"] - (head_coord["x"]+1))
-			directions["right"] += abs(coords["y"] - head_coord["y"])
+			distances[0] = abs(coords["x"] - head_coord["x"])
+			distances[0] += abs(coords["y"] - (head_coord["y"]-1))
+			distances[1] = abs(coords["x"] - head_coord["x"])
+			distances[1] += abs(coords["y"] - (head_coord["y"]+1))
+			distances[2] = abs(coords["x"] - (head_coord["x"]-1))
+			distances[2] += abs(coords["y"] - head_coord["y"])
+			distances[3] = abs(coords["x"] - (head_coord["x"]+1))
+			distances[3] += abs(coords["y"] - head_coord["y"])
 
+			for i in range(4):
+				if(min_distances[i] == 0 or distances[i] < min_distances[i]):
+					min_distances[i] = distances[i]
+
+	directions["up"] += min_distances[0]
+	directions["down"] += min_distances[1]
+	directions["left"] += min_distances[2]
+	directions["right"] += min_distances[3]
+	
+	min_distances = [0, 0, 0, 0]
+	distances = [0, 0, 0, 0]
+
+	# get distance of closest food
 	for food in foods:
-		directions["up"] -= abs(food["x"] - head_coord["x"])
-		directions["up"] -= abs(food["y"] - (head_coord["y"]-1))
-		directions["down"] -= abs(food["x"] - head_coord["x"])
-		directions["down"] -= abs(food["y"] - (head_coord["y"]+1))
-		directions["left"] -= abs(food["x"] - (head_coord["x"]-1))
-		directions["left"] -= abs(food["y"] - head_coord["y"])
-		directions["right"] -= abs(food["x"] - (head_coord["x"]+1))
-		directions["right"] -= abs(food["y"] - head_coord["y"])
+		distances[0] = abs(food["x"] - head_coord["x"])
+		distances[0] -= abs(food["y"] - (head_coord["y"]-1))
+		distances[1] = abs(food["x"] - head_coord["x"])
+		distances[1] -= abs(food["y"] - (head_coord["y"]+1))
+		distances[2] = abs(food["x"] - (head_coord["x"]-1))
+		distances[2] -= abs(food["y"] - head_coord["y"])
+		distances[3] = abs(food["x"] - (head_coord["x"]+1))
+		distances[3] -= abs(food["y"] - head_coord["y"])
+
+		for i in range(4):
+			if(min_distances[i] == 0 or distances[i] < min_distances[i]):
+				min_distances[i] = distances[i]
+
+	directions["up"] -= min_distances[0]
+	directions["down"] -= min_distances[1]
+	directions["left"] -= min_distances[2]
+	directions["right"] -= min_distances[3]
 
 	print(directions)
 
