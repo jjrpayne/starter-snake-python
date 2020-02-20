@@ -44,6 +44,7 @@ def start():
 			request's data if necessary.
 	"""
 	print(json.dumps(data))
+	print(data)
 
 	color = "#0F74F4"
 	head = "pixel"
@@ -61,41 +62,41 @@ def move():
 			snake AI must choose a direction to move in.
 	"""
 	game_data = json.dumps(data)
-	data = json.loads(game_data)
 	print(game_data)
+	print(data)
 	
 
 	#directions1 = ['up', 'down', 'left', 'right']
 	#direction = random.choice(directions1)
 	
-	print(data["you"]["body"])
-	head_coord = data["you"]["body"][0]
+	print(data[u'you'][u'body'])
+	head_coord = data[u'you'][u'body'][0]
 	
 	directions = {"up": 0, "down": 0, "left": 0, "right": 0}
 
-	snakes = data["board"]["snakes"]
-	foods = data["board"]["food"]
+	snakes = data[u'board'][u'snakes']
+	foods = data[u'board'][u'food']
 
 	for snake in snakes:
 		for coords in snakes:
-			directions["up"] += abs(coords["x"] - head_coord["x"])
-			directions["up"] += abs(coords["y"] - (head_coord["y"]+1))
-			directions["down"] += abs(coords["x"] - head_coord["x"])
-			directions["down"] += abs(coords["y"] - (head_coord["y"]-1))
-			directions["left"] += abs(coords["x"] - (head_coord["x"]-1))
-			directions["left"] += abs(coords["y"] - head_coord["y"])
-			directions["right"] += abs(coords["x"] - (head_coord["x"]+1))
-			directions["right"] += abs(coords["y"] - head_coord["y"])
+			directions["up"] += abs(coords[u'x'] - head_coord[u'x'])
+			directions["up"] += abs(coords[u'y'] - (head_coord[u'y']+1))
+			directions["down"] += abs(coords[u'x'] - head_coord[u'x'])
+			directions["down"] += abs(coords[u'y'] - (head_coord[u'y']-1))
+			directions["left"] += abs(coords[u'x'] - (head_coord[u'x']-1))
+			directions["left"] += abs(coords[u'y'] - head_coord[u'y'])
+			directions["right"] += abs(coords[u'x'] - (head_coord[u'x']+1))
+			directions["right"] += abs(coords[u'y'] - head_coord[u'y'])
 
 	for food in foods:
-		directions["up"] -= abs(food["x"] - head_coord["x"])
-		directions["up"] -= abs(food["y"] - (head_coord["y"]+1))
-		directions["down"] -= abs(food["x"] - head_coord["x"])
-		directions["down"] -= abs(food["y"] - (head_coord["y"]-1))
-		directions["left"] -= abs(food["x"] - (head_coord["x"]-1))
-		directions["left"] -= abs(food["y"] - head_coord["y"])
-		directions["right"] -= abs(food["x"] - (head_coord["x"]+1))
-		directions["right"] -= abs(food["y"] - head_coord["y"])
+		directions["up"] -= abs(food[u'x'] - head_coord[u'x'])
+		directions["up"] -= abs(food[u'y'] - (head_coord[u'y']+1))
+		directions["down"] -= abs(food[u'x'] - head_coord[u'x'])
+		directions["down"] -= abs(food[u'y'] - (head_coord[u'y']-1))
+		directions["left"] -= abs(food[u'x'] - (head_coord[u'x']-1))
+		directions["left"] -= abs(food[u'y'] - head_coord[u'y'])
+		directions["right"] -= abs(food[u'x'] - (head_coord[u'x']+1))
+		directions["right"] -= abs(food[u'y'] - head_coord[u'y'])
 
 	print(directions)
 
