@@ -105,13 +105,13 @@ def move():
 	# get distance of closest food
 	for food in foods:
 		distances[0] = abs(food["x"] - head_coord["x"])
-		distances[0] -= abs(food["y"] - (head_coord["y"]-1))
+		distances[0] += abs(food["y"] - (head_coord["y"]-1))
 		distances[1] = abs(food["x"] - head_coord["x"])
-		distances[1] -= abs(food["y"] - (head_coord["y"]+1))
+		distances[1] += abs(food["y"] - (head_coord["y"]+1))
 		distances[2] = abs(food["x"] - (head_coord["x"]-1))
-		distances[2] -= abs(food["y"] - head_coord["y"])
+		distances[2] += abs(food["y"] - head_coord["y"])
 		distances[3] = abs(food["x"] - (head_coord["x"]+1))
-		distances[3] -= abs(food["y"] - head_coord["y"])
+		distances[3] += abs(food["y"] - head_coord["y"])
 
 		for i in range(4):
 			if(min_distances[i] == 0 or distances[i] < min_distances[i]):
