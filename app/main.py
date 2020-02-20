@@ -60,7 +60,7 @@ def move():
 	TODO: Using the data from the endpoint request object, your
 			snake AI must choose a direction to move in.
 	"""
-	game_data = json.dumps(data)
+	game_data = json.load(json.dumps(data))
 	print(game_data)
 	
 
