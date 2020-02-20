@@ -67,7 +67,7 @@ def move():
 	#directions1 = ['up', 'down', 'left', 'right']
 	#direction = random.choice(directions1)
 	
-	print(head_coord["you"]["body"])
+	print(game_data["you"]["body"])
 	head_coord = game_data["you"]["body"][0]
 	
 	directions = {"up": 0, "down": 0, "left": 0, "right": 0}
