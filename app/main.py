@@ -60,7 +60,7 @@ def move():
 	TODO: Using the data from the endpoint request object, your
 			snake AI must choose a direction to move in.
 	"""
-	game_data = json.load(json.dumps(data))
+	game_data = json.dumps(data)
 	print(game_data)
 	
 
@@ -68,12 +68,12 @@ def move():
 	#direction = random.choice(directions1)
 	
 	print(data["you"]["body"])
-	head_coord = game_data["you"]["body"][0]
+	head_coord = data["you"]["body"][0]
 	
 	directions = {"up": 0, "down": 0, "left": 0, "right": 0}
 
-	snakes = game_data["board"]["snakes"]
-	foods = game_data["board"]["food"]
+	snakes = data["board"]["snakes"]
+	foods = data["board"]["food"]
 
 	for snake in snakes:
 		for coords in snakes:
