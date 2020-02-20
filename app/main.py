@@ -95,6 +95,8 @@ def move():
 		directions["right"] -= abs(food["x"] - (head_coord["x"]+1))
 		directions["right"] -= abs(food["y"] - head_coord["y"])
 
+	print(directions)
+
 	return move_response(max(directions, key=directions.get))
 
 
