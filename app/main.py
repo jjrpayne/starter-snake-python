@@ -77,9 +77,9 @@ def move():
 	for snake in snakes:
 		for coords in snake["body"]:
 			directions["up"] += abs(coords["x"] - head_coord["x"])
-			directions["up"] += abs(coords["y"] - (head_coord["y"]+1))
+			directions["up"] += abs(coords["y"] - (head_coord["y"]-1))
 			directions["down"] += abs(coords["x"] - head_coord["x"])
-			directions["down"] += abs(coords["y"] - (head_coord["y"]-1))
+			directions["down"] += abs(coords["y"] - (head_coord["y"]+1))
 			directions["left"] += abs(coords["x"] - (head_coord["x"]-1))
 			directions["left"] += abs(coords["y"] - head_coord["y"])
 			directions["right"] += abs(coords["x"] - (head_coord["x"]+1))
@@ -87,9 +87,9 @@ def move():
 
 	for food in foods:
 		directions["up"] -= abs(food["x"] - head_coord["x"])
-		directions["up"] -= abs(food["y"] - (head_coord["y"]+1))
+		directions["up"] -= abs(food["y"] - (head_coord["y"]-1))
 		directions["down"] -= abs(food["x"] - head_coord["x"])
-		directions["down"] -= abs(food["y"] - (head_coord["y"]-1))
+		directions["down"] -= abs(food["y"] - (head_coord["y"]+1))
 		directions["left"] -= abs(food["x"] - (head_coord["x"]-1))
 		directions["left"] -= abs(food["y"] - head_coord["y"])
 		directions["right"] -= abs(food["x"] - (head_coord["x"]+1))
