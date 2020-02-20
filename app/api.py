@@ -2,17 +2,17 @@ import json
 from bottle import HTTPResponse
 
 def ping_response():
-    return HTTPResponse(
-        status=200
-    )
+	return HTTPResponse(
+		status=200
+	)
 
 def start_response(snake_info):
 	color = snake_info[0]
 	head = snake_info[1]
 	tail = snake_info[2]
 
-    assert type(color) is str, \
-        "Color value must be string"
+	assert type(color) is str, \
+		"Color value must be string"
 
 	assert type(head) is str, \
 		"Head value must be string"
@@ -20,33 +20,33 @@ def start_response(snake_info):
 	assert type(tail) is str, \
 		"Tail value must be string"
 
-    return HTTPResponse(
-        status=200,
-        headers={
-            "Content-Type": "application/json"
-        },
-        body=json.dumps({
-            "color": color
-			"headType": head
+	return HTTPResponse(
+		status=200,
+		headers={
+			"Content-Type": "application/json"
+		},
+		body=json.dumps({
+			"color": color,
+			"headType": head,
 			"tailType": tail
-        })
-    )
+		})
+	)
 
 def move_response(move):
-    assert move in ['up', 'down', 'left', 'right'], \
-        "Move must be one of [up, down, left, right]"
+	assert move in ['up', 'down', 'left', 'right'], \
+		"Move must be one of [up, down, left, right]"
 
-    return HTTPResponse(
-        status=200,
-        headers={
-            "Content-Type": "application/json"
-        },
-        body=json.dumps({
-            "move": move
-        })
-    )
+	return HTTPResponse(
+		status=200,
+		headers={
+			"Content-Type": "application/json"
+		},
+		body=json.dumps({
+			"move": move
+		})
+	)
 
 def end_response():
-    return HTTPResponse(
-        status=200
-    )
+	return HTTPResponse(
+		status=200
+	)
