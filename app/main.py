@@ -75,11 +75,11 @@ def move():
 	foods = data["board"]["food"]
 
 	# order: up, down, left, right
-	min_distances = [0, 0, 0, 0]
-	distances = [0, 0, 0, 0]
 
 	# get distance of closest snake
+	min_distances = [0, 0, 0, 0]
 	for snake in snakes:
+		distances = [0, 0, 0, 0]
 		for coords in snake["body"]:
 			distances[0] = abs(coords["x"] - head_coord["x"])
 			distances[0] += abs(coords["y"] - (head_coord["y"]-1))
@@ -90,9 +90,9 @@ def move():
 			distances[3] = abs(coords["x"] - (head_coord["x"]+1))
 			distances[3] += abs(coords["y"] - head_coord["y"])
 
-			for i in range(4):
-				if(min_distances[i] == 0 or distances[i] < min_distances[i]):
-					min_distances[i] = distances[i]
+		for i in range(4):
+			if(min_distances[i] == 0 or distances[i] < min_distances[i]):
+				min_distances[i] = distances[i]
 
 	directions["up"] += min_distances[0]
 	directions["down"] += min_distances[1]
@@ -100,10 +100,10 @@ def move():
 	directions["right"] += min_distances[3]
 	
 	min_distances = [0, 0, 0, 0]
-	distances = [0, 0, 0, 0]
 
 	# get distance of closest food
 	for food in foods:
+		distances = [0, 0, 0, 0]
 		distances[0] = abs(food["x"] - head_coord["x"])
 		distances[0] += abs(food["y"] - (head_coord["y"]-1))
 		distances[1] = abs(food["x"] - head_coord["x"])
