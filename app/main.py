@@ -90,8 +90,7 @@ def move():
 				distances[2] += abs(coords["y"] - head["y"])
 				distances[3] = abs(coords["x"] - (head["x"]+1))
 				distances[3] += abs(coords["y"] - head["y"])
-		
-			distances /= len(snake["body"])
+			distances = [distance/len(snake["body"]) for distance in distances]
 
 			for i in range(4):
 				if(min_distances[i] == 0 or distances[i] < min_distances[i]):
