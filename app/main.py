@@ -103,7 +103,7 @@ def move():
 	directions["left"] += min_distances[2]
 	directions["right"] += min_distances[3]
 	
-	min_distances = [0, 0, 0, 0]
+	min_distances = [-1, -1, -1, -1]
 
 	# get distance of closest food
 	for food in foods:
@@ -118,7 +118,7 @@ def move():
 		distances[3] += abs(food["y"] - head["y"])
 
 		for i in range(4):
-			if(min_distances[i] == 0 or distances[i] < min_distances[i]):
+			if(min_distances[i] == -1 or distances[i] < min_distances[i]):
 				min_distances[i] = distances[i]
 
 	directions["up"] -= min_distances[0]
