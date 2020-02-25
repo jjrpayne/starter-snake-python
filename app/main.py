@@ -126,7 +126,6 @@ def move():
 	directions["left"] -= min_distances[2]
 	directions["right"] -= min_distances[3]
 
-	print(directions)
 
 	# stop snake from eating itself
 	current_movement = max(directions, key=directions.get)
@@ -151,6 +150,7 @@ def move():
 		# either snake is trapped, or there is only one viable direction
 		# in either case, there is no point in checking any more segments
 			break
+	print(directions)
 
 	return move_response(current_movement)
 
