@@ -65,6 +65,9 @@ def move():
 	you = data["you"]
 	body = you["body"]
 	head = body[0]
+
+	width = data["board"]["width"]
+	height = data["board"]["height"]
 	
 	directions = {"up": 0, "down": 0, "left": 0, "right": 0}
 
@@ -137,6 +140,17 @@ def move():
 		# either snake is trapped, or there is only one viable direction
 		# in either case, there is no point in checking any more segments
 			break
+
+	# avoid wall collisions
+	if("up" in directions and head["y"] == 0):
+		del directions["up"]
+	if("down" in directions and head["y"] == height-1):
+		del directions["down"]
+	if ("left" in directions and head["x"] == 0):
+		del directions["left"]
+	if ("right" in directions and head["x"] == width-1):
+		del directions["right"]
+
 	print(directions)
 
 	if len(directions) >= 1:
