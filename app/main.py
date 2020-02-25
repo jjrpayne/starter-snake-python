@@ -51,7 +51,6 @@ def start():
 
 	return start_response((color, head, tail))
 
-
 @bottle.post('/move')
 def move():
 	data = bottle.request.json
@@ -67,32 +66,37 @@ def move():
 	#directions1 = ['up', 'down', 'left', 'right']
 	#direction = random.choice(directions1)
 
-	head_coord = data["you"]["body"][0]
+	you = data["you"]
+	body = you["body"]
+	head = body[0]
 	
 	directions = {"up": 0, "down": 0, "left": 0, "right": 0}
 
 	snakes = data["board"]["snakes"]
 	foods = data["board"]["food"]
 
-	# order: up, down, left, right
-
-	# get distance of closest snake
+	# get avg distance of closest snake to each direction
 	min_distances = [0, 0, 0, 0]
+	# order: up, down, left, right
 	for snake in snakes:
-		distances = [0, 0, 0, 0]
-		for coords in snake["body"]:
-			distances[0] = abs(coords["x"] - head_coord["x"])
-			distances[0] += abs(coords["y"] - (head_coord["y"]-1))
-			distances[1] = abs(coords["x"] - head_coord["x"])
-			distances[1] += abs(coords["y"] - (head_coord["y"]+1))
-			distances[2] = abs(coords["x"] - (head_coord["x"]-1))
-			distances[2] += abs(coords["y"] - head_coord["y"])
-			distances[3] = abs(coords["x"] - (head_coord["x"]+1))
-			distances[3] += abs(coords["y"] - head_coord["y"])
+		# make sure snake is not you
+		if(snake["id"] != you["id"]):
+			distances = [0, 0, 0, 0]
+			for coords in snake["body"]:
+				distances[0] = abs(coords["x"] - head["x"])
+				distances[0] += abs(coords["y"] - (head["y"]-1))
+				distances[1] = abs(coords["x"] - head["x"])
+				distances[1] += abs(coords["y"] - (head["y"]+1))
+				distances[2] = abs(coords["x"] - (head["x"]-1))
+				distances[2] += abs(coords["y"] - head["y"])
+				distances[3] = abs(coords["x"] - (head["x"]+1))
+				distances[3] += abs(coords["y"] - head["y"])
+		
+			distances /= len(snake["body"])
 
-		for i in range(4):
-			if(min_distances[i] == 0 or distances[i] < min_distances[i]):
-				min_distances[i] = distances[i]
+			for i in range(4):
+				if(min_distances[i] == 0 or distances[i] < min_distances[i]):
+					min_distances[i] = distances[i]
 
 	directions["up"] += min_distances[0]
 	directions["down"] += min_distances[1]
@@ -104,14 +108,14 @@ def move():
 	# get distance of closest food
 	for food in foods:
 		distances = [0, 0, 0, 0]
-		distances[0] = abs(food["x"] - head_coord["x"])
-		distances[0] += abs(food["y"] - (head_coord["y"]-1))
-		distances[1] = abs(food["x"] - head_coord["x"])
-		distances[1] += abs(food["y"] - (head_coord["y"]+1))
-		distances[2] = abs(food["x"] - (head_coord["x"]-1))
-		distances[2] += abs(food["y"] - head_coord["y"])
-		distances[3] = abs(food["x"] - (head_coord["x"]+1))
-		distances[3] += abs(food["y"] - head_coord["y"])
+		distances[0] = abs(food["x"] - head["x"])
+		distances[0] += abs(food["y"] - (head["y"]-1))
+		distances[1] = abs(food["x"] - head["x"])
+		distances[1] += abs(food["y"] - (head["y"]+1))
+		distances[2] = abs(food["x"] - (head["x"]-1))
+		distances[2] += abs(food["y"] - head["y"])
+		distances[3] = abs(food["x"] - (head["x"]+1))
+		distances[3] += abs(food["y"] - head["y"])
 
 		for i in range(4):
 			if(min_distances[i] == 0 or distances[i] < min_distances[i]):
@@ -124,7 +128,31 @@ def move():
 
 	print(directions)
 
-	return move_response(max(directions, key=directions.get))
+	# stop snake from eating itself
+	current_movement = max(directions, key=directions.get)
+	for seg in body:
+		if(current_movement == "up" and seg["x"] == head["x"] and seg["y"] == head["y"]-1):
+			if(current_movement in directions):
+				del directions[current_movement]
+				current_movement = max(directions, key=directions.get)
+		if(current_movement == "down" and seg["x"] == head["x"] and seg["y"] == head["y"]+1)
+			if(current_movement in directions):
+				del directions[current_movement]	
+				current_movement = max(directions, key=directions.get)
+		if(current_movement == "left" and seg["x"] == head["x"]-1 and seg["y"] == head["y"])
+			if(current_movement in directions):
+				del directions[current_movement]	
+				current_movement = max(directions, key=directions.get)
+		if(current_movement == "right" and seg["x"] == head["x"]+1 and seg["y"] == head["y"])
+			if(current_movement in directions):
+				del directions[current_movement]	
+				current_movement = max(directions, key=directions.get)
+		if len(directions) <= 1:
+		# either snake is trapped, or there is only one viable direction
+		# in either case, there is no point in checking any more segments
+			break
+
+	return move_response(current_movement)
 
 
 @bottle.post('/end')
