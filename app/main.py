@@ -135,15 +135,15 @@ def move():
 			if(current_movement in directions):
 				del directions[current_movement]
 				current_movement = max(directions, key=directions.get)
-		if(current_movement == "down" and seg["x"] == head["x"] and seg["y"] == head["y"]+1)
+		if(current_movement == "down" and seg["x"] == head["x"] and seg["y"] == head["y"]+1):
 			if(current_movement in directions):
 				del directions[current_movement]	
 				current_movement = max(directions, key=directions.get)
-		if(current_movement == "left" and seg["x"] == head["x"]-1 and seg["y"] == head["y"])
+		if(current_movement == "left" and seg["x"] == head["x"]-1 and seg["y"] == head["y"]):
 			if(current_movement in directions):
 				del directions[current_movement]	
 				current_movement = max(directions, key=directions.get)
-		if(current_movement == "right" and seg["x"] == head["x"]+1 and seg["y"] == head["y"])
+		if(current_movement == "right" and seg["x"] == head["x"]+1 and seg["y"] == head["y"]):
 			if(current_movement in directions):
 				del directions[current_movement]	
 				current_movement = max(directions, key=directions.get)
