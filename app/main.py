@@ -65,6 +65,7 @@ def move():
 	you = data["you"]
 	body = you["body"]
 	head = body[0]
+	health = you["health"]
 
 	width = data["board"]["width"]
 	height = data["board"]["height"]
@@ -90,7 +91,10 @@ def move():
 				distances[2] += abs(coords["y"] - head["y"])
 				distances[3] = abs(coords["x"] - (head["x"]+1))
 				distances[3] += abs(coords["y"] - head["y"])
-			#distances = [distance/len(snake["body"]) for distance in distances]
+			if (health < 50):
+				# if health is low, use avg distance (focus on getting food)
+				# if high, use total distance (focus on avoiding snakes)
+				distances = [distance/len(snake["body"]) for distance in distances]
 
 			for i in range(4):
 				if(min_distances[i] == 0 or distances[i] < min_distances[i]):
