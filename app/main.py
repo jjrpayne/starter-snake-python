@@ -62,10 +62,6 @@ def move():
 	game_data = json.dumps(data)
 	print(game_data)
 	
-
-	#directions1 = ['up', 'down', 'left', 'right']
-	#direction = random.choice(directions1)
-
 	you = data["you"]
 	body = you["body"]
 	head = body[0]
@@ -128,29 +124,26 @@ def move():
 
 
 	# stop snake from eating itself
-	current_movement = max(directions, key=directions.get)
 	for seg in body:
-		if(current_movement == "up" and seg["x"] == head["x"] and seg["y"] == head["y"]-1):
-			if(current_movement in directions):
-				del directions[current_movement]
-				current_movement = max(directions, key=directions.get)
-		if(current_movement == "down" and seg["x"] == head["x"] and seg["y"] == head["y"]+1):
-			if(current_movement in directions):
-				del directions[current_movement]	
-				current_movement = max(directions, key=directions.get)
-		if(current_movement == "left" and seg["x"] == head["x"]-1 and seg["y"] == head["y"]):
-			if(current_movement in directions):
-				del directions[current_movement]	
-				current_movement = max(directions, key=directions.get)
-		if(current_movement == "right" and seg["x"] == head["x"]+1 and seg["y"] == head["y"]):
-			if(current_movement in directions):
-				del directions[current_movement]	
-				current_movement = max(directions, key=directions.get)
+		if("up" in directions and seg["x"] == head["x"] and seg["y"] == head["y"]-1):
+			del directions["up"]
+		if("down" in directions and seg["x"] == head["x"] and seg["y"] == head["y"]+1):
+			del directions["down"]	
+		if("left" in directions and seg["x"] == head["x"]-1 and seg["y"] == head["y"]):
+			del directions["left"]	
+		if("right" in directions and seg["x"] == head["x"]+1 and seg["y"] == head["y"]):
+			del directions["right"]	
 		if len(directions) <= 1:
 		# either snake is trapped, or there is only one viable direction
 		# in either case, there is no point in checking any more segments
 			break
 	print(directions)
+
+	if len(directions) >= 1:
+		current_movement = max(directions, key=directions.get)
+	else:
+		# snake is trapped, just return any direction
+		current_movement = "up"
 
 	return move_response(current_movement)
 
